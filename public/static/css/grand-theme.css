@@ -4,7 +4,7 @@
    <link href="static/css/grand-theme.css" rel="stylesheet">
    ========================================================== */
 
-/* Custom fonts: put the files in static/fonts/ (check each licence for web use) */
+/* Custom fonts: put the files in static/fonts/  */
 @font-face {
   font-family: "Dream Avenue";
   src: url("../fonts/DreamAvenue.woff2") format("woff2"),
@@ -607,10 +607,7 @@ body::before {
 
 /* ==========================================================
    LOGO CENTERED IN THE MEDALLION (desktop)
-   The logo used to sit in the page column, which is not the same
-   place as the blob, so it drifted off-center. Now the logo is drawn
-   inside the blob itself, so it is always exactly in the middle.
-   The real <img> stays in the page (invisible) for screen readers.
+  
    ========================================================== */
 @keyframes gt-blob-bob {
   0%, 100% { transform: translateY(0); }
@@ -636,9 +633,7 @@ body::before {
 
 /* ==========================================================
    LOGO ALWAYS CENTERED IN THE MEDALLION
-   The medallion used to be pinned to the screen edge while the logo sat in
-   the Bootstrap column, so they drifted apart. Now the medallion is drawn
-   by the logo's own column, so they stay centered at every screen width.
+   
    ========================================================== */
 @media (min-width: 992px) {
   .header::after { display: none; }               /* old free-floating blob off */
@@ -679,10 +674,7 @@ body::before {
 
 /* ==========================================================
    LOGO + MEDALLION FIX
-   The logo was drawn from an image path that your site could not
-   resolve, so it vanished. Now the real <img> is back, and the medallion
-   is attached to the logo's own column, so the two always share one center
-   and no image path is needed.
+  
    ========================================================== */
 
 /* Old full-width blob is replaced by the medallion below */
@@ -724,9 +716,7 @@ body::before {
 
 
 /* ==========================================================
-   LOGO NUDGE — the logo artwork sits right of its image's center
-   (the orbs stick out on the right), so shift the image left a little.
-   Percent of the image's own width, so it scales on every screen.
+   LOGO NUDGE
    ========================================================== */
 .hero-header img[alt="IPFest Logo"] { translate: -14% 0; }
 
