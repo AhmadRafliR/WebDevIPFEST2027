@@ -603,3 +603,151 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .hero-header img[alt="IPFest Logo"] { animation: none; }
 }
+
+
+/* ==========================================================
+   LOGO CENTERED IN THE MEDALLION (desktop)
+   The logo used to sit in the page column, which is not the same
+   place as the blob, so it drifted off-center. Now the logo is drawn
+   inside the blob itself, so it is always exactly in the middle.
+   The real <img> stays in the page (invisible) for screen readers.
+   ========================================================== */
+@keyframes gt-blob-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+@media (min-width: 992px) {
+  .header::after {
+    background:
+      url("../images/ipfest_2027_logo.png") center / auto 64% no-repeat padding-box,
+      radial-gradient(ellipse at 50% 54%, rgba(230, 199, 42, .45) 0%, rgba(230, 199, 42, .14) 38%, transparent 64%) padding-box,
+      radial-gradient(ellipse at 16% 10%, rgba(108, 103, 125, .6), transparent 52%) padding-box,
+      linear-gradient(var(--navy), var(--navy)) padding-box,
+      linear-gradient(140deg, var(--ivory) 0%, var(--gold) 22%, var(--orange) 50%, var(--gold) 78%, var(--ivory) 100%) border-box;
+    background-origin: border-box;
+    animation: gt-blob-bob 8s ease-in-out infinite;
+  }
+  .hero-header img[alt="IPFest Logo"] {
+    opacity: 0;
+    animation: none;
+  }
+}
+
+
+/* ==========================================================
+   LOGO ALWAYS CENTERED IN THE MEDALLION
+   The medallion used to be pinned to the screen edge while the logo sat in
+   the Bootstrap column, so they drifted apart. Now the medallion is drawn
+   by the logo's own column, so they stay centered at every screen width.
+   ========================================================== */
+@media (min-width: 992px) {
+  .header::after { display: none; }               /* old free-floating blob off */
+  .hero-header { overflow: visible !important; }   /* let the medallion breathe */
+
+  .hero-header .row > .col-lg-6:last-child {
+    --e: clamp(40px, 6vw, 120px);                  /* how far the medallion grows to the right */
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 540px;
+    left: 6vw;
+  }
+  .hero-header .row > .col-lg-6:last-child::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -30px;
+    bottom: -30px;
+    left: 0;
+    right: calc(-1 * var(--e));
+    border-radius: 58% 42% 46% 54% / 38% 40% 60% 62%;
+    border: 18px solid transparent;
+    background:
+      radial-gradient(ellipse at 50% 54%, rgba(230, 199, 42, .45) 0%, rgba(230, 199, 42, .14) 38%, transparent 64%) padding-box,
+      radial-gradient(ellipse at 16% 10%, rgba(108, 103, 125, .6), transparent 52%) padding-box,
+      linear-gradient(var(--navy), var(--navy)) padding-box,
+      linear-gradient(140deg, var(--ivory) 0%, var(--gold) 22%, var(--orange) 50%, var(--gold) 78%, var(--ivory) 100%) border-box;
+    background-origin: border-box;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .45), 0 0 90px rgba(230, 199, 42, .28);
+  }
+  /* push the logo by the same amount the medallion grew, so it sits dead center */
+  .hero-header .row > .col-lg-6:last-child img { margin-left: var(--e); }
+}
+
+
+/* ==========================================================
+   LOGO + MEDALLION FIX
+   The logo was drawn from an image path that your site could not
+   resolve, so it vanished. Now the real <img> is back, and the medallion
+   is attached to the logo's own column, so the two always share one center
+   and no image path is needed.
+   ========================================================== */
+
+/* Old full-width blob is replaced by the medallion below */
+.header::after { display: none !important; }
+
+/* Logo visible again */
+@media (min-width: 992px) {
+  .hero-header img[alt="IPFest Logo"] {
+    opacity: 1;
+    animation: gt-bob 6s ease-in-out infinite;
+  }
+}
+
+/* Medallion: navy blob, gold-foil rim, warm glow, centered behind the logo */
+.hero-header .row > .col-lg-6:last-child { position: relative; }
+.hero-header .row > .col-lg-6:last-child::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(104%, 640px);
+  aspect-ratio: 1 / 1.04;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 58% 42% 46% 54% / 38% 40% 60% 62%;
+  border: 18px solid transparent;
+  background:
+    radial-gradient(ellipse at 50% 54%, rgba(230, 199, 42, .45) 0%, rgba(230, 199, 42, .14) 38%, transparent 64%) padding-box,
+    radial-gradient(ellipse at 16% 10%, rgba(108, 103, 125, .6), transparent 52%) padding-box,
+    linear-gradient(var(--navy), var(--navy)) padding-box,
+    linear-gradient(140deg, var(--ivory) 0%, var(--gold) 22%, var(--orange) 50%, var(--gold) 78%, var(--ivory) 100%) border-box;
+  background-origin: border-box;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .45), 0 0 90px rgba(230, 199, 42, .28);
+}
+@media (max-width: 991px) {
+  .hero-header .row > .col-lg-6:last-child::before { width: min(80%, 420px); }
+}
+
+
+/* ==========================================================
+   LOGO NUDGE — the logo artwork sits right of its image's center
+   (the orbs stick out on the right), so shift the image left a little.
+   Percent of the image's own width, so it scales on every screen.
+   ========================================================== */
+.hero-header img[alt="IPFest Logo"] { translate: -14% 0; }
+
+/* ===== Blob: melayang + bentuk berubah pelan-pelan ===== */
+@keyframes gt-blob-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -12px; }
+}
+
+@keyframes gt-blob-morph {
+  0%, 100% { border-radius: 58% 42% 46% 54% / 38% 40% 60% 62%; }
+  33%      { border-radius: 46% 54% 58% 42% / 50% 36% 64% 50%; }
+  66%      { border-radius: 54% 46% 42% 58% / 42% 56% 44% 58%; }
+}
+
+.hero-header .row > .col-lg-6:last-child::before {
+  animation:
+    gt-blob-float 6s ease-in-out infinite,
+    gt-blob-morph 14s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-header .row > .col-lg-6:last-child::before { animation: none; }
+}
