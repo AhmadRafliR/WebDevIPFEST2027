@@ -1,0 +1,275 @@
+﻿/* ================================================================
+   IPFEST 2027 — Grand Sub-page layer
+   Load order: bootstrap -> style.css -> competition.css -> grand-theme.css -> grand-subpage.css
+   ================================================================ */
+
+/* ---- 0. Token aliases ----------------------------------------- */
+:root {
+  --sp-navy:   #16213E;
+  --sp-ivory:  #F8F5F2;
+  --sp-slate:  #6C677D;
+  --sp-gold:   #E6C72A;
+  --sp-orange: #D97706;
+}
+
+/* ---- 1. Page background --------------------------------------- */
+body {
+  background:
+    radial-gradient(ellipse 55% 45% at 95% 0%,  rgba(108,103,125,.35), transparent 70%),
+    radial-gradient(ellipse 45% 35% at 0%  55%, rgba(108,103,125,.18), transparent 70%),
+    radial-gradient(ellipse 35% 25% at 50% 100%,rgba(217,119,6,.10),   transparent 70%),
+    var(--sp-navy) !important;
+}
+body::after { background-image: none !important; opacity: 0 !important; }
+
+/* ---- 2. Spinner ----------------------------------------------- */
+#spinner.bg-white { background: var(--sp-ivory) !important; }
+#spinner .spinner-border {
+  border-color: var(--sp-gold) !important;
+  border-right-color: transparent !important;
+}
+
+/* ---- 3. Breadcrumb / Hero header ------------------------------ */
+.bg-breadcrumb {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 110%, rgba(230,199,42,.18), transparent 60%),
+    radial-gradient(ellipse 40% 40% at 90%  0%,  rgba(108,103,125,.30), transparent 55%),
+    var(--sp-navy) !important;
+  padding: 160px 0 80px !important;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid;
+  border-image: linear-gradient(90deg, transparent, var(--sp-gold), var(--sp-orange), var(--sp-gold), transparent) 1;
+}
+.breadcrumb-animation li { background: rgba(230,199,42,.18) !important; border-radius: 50%; }
+.bg-breadcrumb .display-3,
+.bg-breadcrumb h1,
+.bg-breadcrumb h2,
+.bg-breadcrumb h3 {
+  font-family: "Dream Avenue","Playfair Display",serif !important;
+  color: var(--sp-ivory) !important;
+  -webkit-text-fill-color: var(--sp-ivory) !important;
+  text-shadow: 0 4px 24px rgba(0,0,0,.45);
+  font-weight: 400 !important;
+}
+.bg-breadcrumb .blockquote-footer,
+.bg-breadcrumb figcaption { color: rgba(248,245,242,.70) !important; font-family: "Poppins",sans-serif !important; }
+.bg-breadcrumb img.img-fluid {
+  filter: drop-shadow(0 0 18px rgba(230,199,42,.5)) drop-shadow(0 6px 12px rgba(0,0,0,.4));
+}
+
+/* ---- 4. Main content panels ----------------------------------- */
+body:not(.dashboard-theme) main .container {
+  background: rgba(248,245,242,.06) !important;
+  border: 1px solid rgba(230,199,42,.35) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,.30) !important;
+  backdrop-filter: blur(6px);
+}
+body:not(.dashboard-theme) .experience .container {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* ---- 5. About -- text & image --------------------------------- */
+.contact h4.text-primary {
+  font-family: "Safira March","Playfair Display",serif !important;
+  color: var(--sp-gold) !important;
+  -webkit-text-fill-color: var(--sp-gold) !important;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.contact h1.display-5 {
+  font-family: "Playfair Display",serif !important;
+  color: var(--sp-ivory) !important;
+  -webkit-text-fill-color: var(--sp-ivory) !important;
+}
+.contact h1.display-5 span {
+  font-family: "Great Vibes",cursive !important;
+  color: var(--sp-orange) !important;
+  -webkit-text-fill-color: var(--sp-orange) !important;
+  font-size: 1.3em;
+}
+.contact p.mb-0.fs-5 {
+  color: rgba(248,245,242,.85) !important;
+  font-family: "Poppins",sans-serif !important;
+  line-height: 1.8;
+}
+.contact .col-lg-5 img {
+  border: 3px solid var(--sp-gold) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,.45), 0 0 40px rgba(230,199,42,.20) !important;
+  border-radius: 16px !important;
+}
+
+/* ---- 6. Buttons ---------------------------------------------- */
+a.btn-outline-primary {
+  border-color: var(--sp-gold) !important;
+  color: var(--sp-gold) !important;
+  background: transparent !important;
+  font-family: "Poppins",sans-serif !important;
+  font-weight: 500 !important;
+  transition: all .3s ease;
+}
+a.btn-outline-primary:hover {
+  background: var(--sp-gold) !important;
+  color: var(--sp-navy) !important;
+}
+
+/* ---- 7. Section headings inside main -------------------------- */
+body:not(.dashboard-theme) main .container h4.text-primary {
+  font-family: "Safira March","Playfair Display",serif !important;
+  color: var(--sp-gold) !important;
+  -webkit-text-fill-color: var(--sp-gold) !important;
+}
+body:not(.dashboard-theme) main .container h1.display-5 {
+  color: var(--sp-ivory) !important;
+  -webkit-text-fill-color: var(--sp-ivory) !important;
+  font-family: "Playfair Display",serif !important;
+}
+body:not(.dashboard-theme) main .container h1.display-5 span {
+  font-family: "Great Vibes",cursive !important;
+  color: var(--sp-orange) !important;
+  -webkit-text-fill-color: var(--sp-orange) !important;
+}
+
+/* ---- 8. Timeline text ---------------------------------------- */
+body:not(.dashboard-theme) .timeline-text,
+body:not(.dashboard-theme) .timeline-text h2,
+body:not(.dashboard-theme) .timeline-text .lead { color: var(--sp-ivory) !important; -webkit-text-fill-color: var(--sp-ivory) !important; }
+body:not(.dashboard-theme) .timeline-date {
+  color: var(--sp-gold) !important;
+  -webkit-text-fill-color: var(--sp-gold) !important;
+  font-family: "Safira March","Playfair Display",serif !important;
+}
+
+/* ---- 9. Gallery grid ----------------------------------------- */
+.prev-event-gallery { padding: 3rem 0; }
+.prev-event-gallery .section-label {
+  font-family: "Safira March","Playfair Display",serif;
+  color: var(--sp-gold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-size: .9rem;
+}
+.prev-event-gallery h2.section-title {
+  font-family: "Playfair Display",serif;
+  color: var(--sp-ivory);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  margin-bottom: 2.5rem;
+}
+.prev-event-gallery h2.section-title span {
+  font-family: "Great Vibes",cursive;
+  color: var(--sp-orange);
+  font-size: 1.25em;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+.gallery-item {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(230,199,42,.35);
+  box-shadow: 0 8px 28px rgba(0,0,0,.35);
+  aspect-ratio: 4 / 3;
+  cursor: pointer;
+}
+.gallery-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+  display: block;
+}
+.gallery-item:hover img { transform: scale(1.08); }
+.gallery-item::after {
+  content: "\f065";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  color: var(--sp-ivory);
+  background: rgba(22,33,62,.50);
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.gallery-item:hover::after { opacity: 1; }
+
+/* ---- 10. Destination cards (Tour de Bandung) ----------------- */
+.destination-cards { padding: 2.5rem 0; }
+.dest-card {
+  background: rgba(248,245,242,.07);
+  border: 1px solid rgba(230,199,42,.40);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(0,0,0,.30);
+  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+.dest-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,.40), 0 0 0 1px rgba(230,199,42,.55);
+  border-color: var(--sp-gold);
+}
+.dest-card-img {
+  width: 100%; height: 200px;
+  object-fit: cover;
+  transition: transform .5s ease;
+  display: block;
+}
+.dest-card:hover .dest-card-img { transform: scale(1.06); }
+.dest-card-body { padding: 1.25rem 1.5rem 1.5rem; }
+.dest-card-body h5 {
+  font-family: "Safira March","Playfair Display",serif !important;
+  color: var(--sp-gold) !important;
+  -webkit-text-fill-color: var(--sp-gold) !important;
+  font-size: 1.15rem;
+  letter-spacing: .05em;
+  margin-bottom: .5rem;
+}
+.dest-card-body p {
+  font-family: "Poppins",sans-serif !important;
+  color: rgba(248,245,242,.80) !important;
+  -webkit-text-fill-color: rgba(248,245,242,.80) !important;
+  font-size: .9rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ---- 11. Map frame ------------------------------------------- */
+.container-fluid iframe.rounded {
+  border: 3px solid rgba(230,199,42,.50) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,.40), 0 0 30px rgba(230,199,42,.14) !important;
+  border-radius: 16px !important;
+}
+
+/* ---- 12. Back-to-top ----------------------------------------- */
+.back-to-top {
+  background: linear-gradient(135deg, var(--sp-gold), var(--sp-orange)) !important;
+  border: 0 !important;
+  color: var(--sp-navy) !important;
+  box-shadow: 0 8px 24px rgba(230,199,42,.35) !important;
+}
+.back-to-top:hover { background: var(--sp-ivory) !important; color: var(--sp-navy) !important; }
+
+/* ---- 13. Dropdown -------------------------------------------- */
+body:not(.dashboard-theme) .dropdown-menu {
+  background: var(--sp-navy) !important;
+  border: 1px solid rgba(230,199,42,.55) !important;
+}
+body:not(.dashboard-theme) .dropdown-item { color: var(--sp-ivory) !important; }
+body:not(.dashboard-theme) .dropdown-item:hover,
+body:not(.dashboard-theme) .dropdown-item:focus {
+  background: var(--sp-gold) !important;
+  color: var(--sp-navy) !important;
+}
+
+/* ---- 14. Reduced-motion --------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-item img, .gallery-item::after,
+  .dest-card, .dest-card-img,
+  .breadcrumb-animation li { transition: none !important; animation: none !important; }
+}
