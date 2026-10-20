@@ -188,11 +188,64 @@ document.addEventListener("DOMContentLoaded", () => {
   const memberCount = document.getElementById("memberCount");
   const entryContainer = document.querySelector("#entry");
 
-  // Sembunyikan form awal
-  leaderForm?.classList.add("d-none");
-  memberForm?.classList.add("d-none");
-  paymentForm?.classList.add("d-none");
-  if (agreementForm) agreementForm.closest('.col-12')?.classList.add("d-none");
+  const steps = [...document.querySelectorAll("[data-registration-step]")];
+  const descriptions = [
+    "Pilih kompetisi yang sesuai. Ringkasan dan persyaratan tim akan membantu kamu melanjutkan pendaftaran.",
+    "Isi informasi ketua tim dan siapkan dokumen yang diminta.",
+    "Lengkapi data setiap anggota sesuai jumlah tim.",
+    "Buat akun untuk login dan memantau pendaftaran.",
+    "Pilih metode pembayaran, unggah bukti bila tersedia, lalu kirim pendaftaran."
+  ];
+  let currentStep = 0;
+  const showStep = (index) => {
+    currentStep = index;
+    steps.forEach((step, stepIndex) => { step.hidden = stepIndex !== index; });
+    document.querySelectorAll(".registration-progress-step").forEach((item, stepIndex) => {
+      item.classList.toggle("is-complete", stepIndex < index);
+      item.classList.toggle("is-current", stepIndex === index);
+      if (stepIndex === index) item.setAttribute("aria-current", "step");
+      else item.removeAttribute("aria-current");
+    });
+    document.querySelector(".registration-progress").style.setProperty("--step-progress", `${(index / (steps.length - 1)) * 100}%`);
+    document.querySelector("#step-count").textContent = `Langkah ${index + 1} dari ${steps.length}`;
+    document.querySelector("#step-description").textContent = descriptions[index];
+    steps[index]?.querySelector("h2")?.focus({ preventScroll: true });
+    steps[index]?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start"
+    });
+  };
+  const validateStep = () => {
+    const step = steps[currentStep];
+    registrationForm.classList.add("was-validated");
+    if (currentStep === 0 && !compeInput.value) {
+      showError("Pilih kompetisi terlebih dahulu.");
+      return false;
+    }
+    if (currentStep === 3 && pass?.value !== confirmPass?.value) {
+      confirmPass?.setCustomValidity("Password tidak sama.");
+    } else {
+      confirmPass?.setCustomValidity("");
+    }
+    const invalidField = step.querySelector(":invalid");
+    const valid = !invalidField;
+    if (!valid) invalidField.focus();
+    return valid;
+  };
+  document.querySelectorAll("[data-next]").forEach(button => {
+    button.addEventListener("click", () => {
+      if (validateStep()) showStep(Math.min(currentStep + 1, steps.length - 1));
+    });
+  });
+  document.querySelectorAll("[data-back]").forEach(button => {
+    button.addEventListener("click", () => showStep(Math.max(currentStep - 1, 0)));
+  });
+  leaderForm?.querySelector("#batch")?.addEventListener("change", (event) => {
+    const otherBatch = leaderForm.querySelector("#other-batch");
+    const isOther = event.target.value === "0";
+    otherBatch.classList.toggle("d-none", !isOther);
+    otherBatch.required = isOther;
+  });
 
   // Handle klik kompetisi
   document.querySelectorAll(".card-compe").forEach(card => {
@@ -207,16 +260,16 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      document.querySelectorAll(".card-compe").forEach(c => c.classList.remove('active'));
+      document.querySelectorAll(".card-compe").forEach(c => {
+        c.classList.remove('active');
+        c.setAttribute("aria-pressed", "false");
+      });
 
       card.classList.add('active');
+      card.setAttribute("aria-pressed", "true");
 
       compeInput.value = selectedCompetition;
-      leaderForm?.classList.remove("d-none");
-      memberForm?.classList.remove("d-none");
-      paymentForm?.classList.remove("d-none");
-
-      if (agreementForm) agreementForm.closest('.col-12')?.classList.remove("d-none");
+      competitionForm.querySelector("[data-next]").disabled = false;
 
       generateTeamMemberOption(selectedCompetition, memberCount);
       const count = parseInt(memberCount.value, 10) || 1;
@@ -272,6 +325,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Handle submit form
   registrationForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (!paymentForm.checkValidity()) {
+      registrationForm.classList.add("was-validated");
+      paymentForm.querySelector(":invalid")?.focus();
+      return;
+    }
     const submitBtn = registrationForm.querySelector("button[type='submit']");
     if (!submitBtn) return;
 
@@ -371,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Ambil data anggota
-      const totalMembers = parseInt(memberCount?.value || "1", 10);
+    const totalMembers = parseInt(memberCount?.value || "1", 10);
       for (let i = 1; i < totalMembers; i++) {
         const mFirstName = document.getElementById(`firstName${i}`)?.value;
         const mLastName = document.getElementById(`lastName${i}`)?.value;
