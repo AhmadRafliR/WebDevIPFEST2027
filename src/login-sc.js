@@ -4,7 +4,7 @@ import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
 
 import { AUTH, DB } from './index.js'
 
-import { failedLogin } from '../static/js/alert.js'
+import { failedLogin } from './shared/alert.js'
 
 // DB for SC Delegates
 const SC_DB = collection(DB, 'SC_Selection')

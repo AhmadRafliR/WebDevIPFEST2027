@@ -1,8 +1,8 @@
-import { doc, serverTimestamp, setDoc, updateDoc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 
 import { DB } from './index.js'
 
-import { setToastAlert } from '../static/js/alert.js'
+import { setToastAlert } from './shared/alert.js'
 
 const attendanceForm = document.querySelector('#ct-start')
 const formBtn = attendanceForm.querySelector('button')
@@ -16,11 +16,6 @@ const attendanceBatch = document.querySelector('#attendance-batch')
 attendanceForm.addEventListener('submit', async (e) => {
 	e.preventDefault()
 
-	if (!attendanceForm.checkValidity()) {
-		setToastAlert('warning', 'Please fill in all the fields properly!')
-		return
-	}
-
 	formBtn.innerText = 'Loading...'
 	formBtn.disabled = true
 
@@ -31,14 +26,9 @@ attendanceForm.addEventListener('submit', async (e) => {
 	const studentNumber = attendanceStudentNumber.value
 	const batch = attendanceBatch.value
 
-	const docRef = doc(DB, 'Grand_IPCONVEX', email)
+	const docRef = doc(DB, 'Career_Talk', email)
 
 	const checkTimeDifference = (t1, t2) => {
-
-		if (t1 === null || t2 === null) {
-			return false
-		}
-
 		const date1 = t1.toDate()
 		const date2 = t2.toDate()
 
@@ -52,19 +42,18 @@ attendanceForm.addEventListener('submit', async (e) => {
 		const snap = await getDoc(docRef)
 
 		if (!snap.exists()) {
-			await setDoc(docRef, {
-				full_name: fullName,
-				email: email,
-				major: major,
-				university: university,
-				student_number: studentNumber,
-				batch: batch,
-				checkin: null,
-				checkout: serverTimestamp()
-			})
-		} else if (email === snap.id) {
+			setToastAlert('danger', 'You have not checked in yet!')
+			throw new Error('User has not checked in')
+		}
+
+		if (snap.data().checkout !== null) {
+			setToastAlert('danger', 'You have already checked out')
+			throw new Error('User has already checked out')
+		}
+
+		if (email === snap.id) {
 			await updateDoc(docRef, {
-				checkout: serverTimestamp(),
+				checkout: serverTimestamp()
 			})
 		}
 

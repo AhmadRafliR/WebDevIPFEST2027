@@ -6,7 +6,7 @@ import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase
 
 import { DB, AUTH, STORAGE } from './index.js'
 
-import { showProgressUI, setToastAlert } from '../static/js/alert.js'
+import { showProgressUI, setToastAlert } from './shared/alert.js'
 
 
 // =========================

@@ -13,7 +13,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 import { DB, AUTH, STORAGE } from './index.js'
 
-import { setToastAlert } from '../static/js/alert.js'
+import { setToastAlert } from './shared/alert.js'
 
 // check auth
 let switchCompetition = null

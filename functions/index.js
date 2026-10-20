@@ -1,26 +1,29 @@
 const admin = require('firebase-admin')
-const functions = require('firebase-functions')
+const { onDocumentCreated } = require('firebase-functions/v2/firestore')
+const { defineSecret } = require('firebase-functions/params')
 const { PDFDocument, rgb } = require('pdf-lib')
 const { Storage } = require('@google-cloud/storage')
 const nodeMailer = require('nodemailer')
 
 admin.initializeApp()
 const storage = new Storage()
+const mailgunSmtpPassword = defineSecret('MAILGUN_SMTP_PASSWORD')
 
-const transporter = nodeMailer.createTransport({
+exports.generateCertificate = onDocumentCreated({
+  document: 'Certificates/{docId}',
+  region: 'asia-southeast2',
+  secrets: [mailgunSmtpPassword]
+}, async (event) => {
+   const { name, email } = event.data.data()
+   const transporter = nodeMailer.createTransport({
 	host:'smtp.mailgun.org',
 	port: 587,
 	secure: false,
 	auth: {
 		user: 'postmaster@ipfest25.com',
-		pass: '3f71268183182f83c53e26d39c73b3f6-ac3d5f74-7e1d2c88'
+		pass: mailgunSmtpPassword.value()
 	}
 })
-
-exports.generateCertificate = functions.region('asia-southeast2').firestore
-  .document('Certificates/{docId}')
-  .onCreate(async (snap, context) => {
-   const { name, email } = snap.data()
 
    const templateBucket = storage.bucket('template_sertif')
    const [templateFile] = await templateBucket.file('dummy_sertif_template.pdf').download()

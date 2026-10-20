@@ -1,7 +1,7 @@
 // ==== Import Firebase SDK ====
 import { signInWithEmailAndPassword, signOut, sendEmailVerification } from "firebase/auth";
 import { AUTH, DB } from "./index.js";
-import { emailNotVerified, accountCreated, failedLogin } from "../static/js/alert.js";
+import { emailNotVerified, accountCreated, failedLogin } from "./shared/alert.js";
 import { doc, getDoc } from "firebase/firestore";
 
 // ==== Wait for DOM ====

@@ -5,7 +5,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 import { DB, AUTH, STORAGE } from './index.js'
-import { setToastAlert } from '../static/js/alert.js'
+import { setToastAlert } from './shared/alert.js'
 
 // =========================
 // AUTH STATE

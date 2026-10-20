@@ -6,7 +6,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 
 import { DB, AUTH, STORAGE } from './index.js'
 
-import { showProgressUI, setToastAlert } from '../static/js/alert.js'
+import { showProgressUI, setToastAlert } from './shared/alert.js'
 
 // Check User ID
 let currentUserID
@@ -1459,7 +1459,7 @@ async function fetchUserData(){
 
 // import { DB, AUTH, STORAGE } from './index.js'
 
-// import { showProgressUI, setToastAlert } from '../static/js/alert.js'
+// import { showProgressUI, setToastAlert } from './shared/alert.js'
 
 // // =========================
 // // AUTH STATE
@@ -3232,7 +3232,7 @@ async function fetchUserData(){
 
 // import { DB, AUTH, STORAGE } from './index.js'
 
-// import { showProgressUI, setToastAlert } from '../static/js/alert.js'
+// import { showProgressUI, setToastAlert } from './shared/alert.js'
 
 // // =========================
 // // AUTH STATE

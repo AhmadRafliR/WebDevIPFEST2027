@@ -1,8 +1,8 @@
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { doc, serverTimestamp, setDoc, getDoc } from 'firebase/firestore'
 
 import { DB } from './index.js'
 
-import { setToastAlert } from '../static/js/alert.js'
+import { setToastAlert } from './shared/alert.js'
 
 const attendanceForm = document.querySelector('#ct-start')
 const formBtn = attendanceForm.querySelector('button')
@@ -26,7 +26,7 @@ attendanceForm.addEventListener('submit', async (e) => {
 	const studentNumber = attendanceStudentNumber.value
 	const batch = attendanceBatch.value
 
-	const docRef = doc(DB, 'Career_Talk', email)
+	const docRef = doc(DB, 'Grand_IPCONVEX', email)
 
 	try {
 		const snap = await getDoc(docRef)
@@ -50,7 +50,7 @@ attendanceForm.addEventListener('submit', async (e) => {
 			window.location.href = 'post-attendance.html'
 		}
 	} catch (error) {
-		if (error.message !== 'User has already checked in') {
+		if (error.message !== 'User already checked in') {
 			setToastAlert('danger', 'Something went wrong, please contact us!')
 			console.error('Error updating document:', error)
 		}

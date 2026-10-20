@@ -1,6 +1,6 @@
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { AUTH } from './index.js'
-import { resetEmailSent } from '../static/js/alert.js'
+import { resetEmailSent } from './shared/alert.js'
 
 const resetForm = document.querySelector("#reset-password")
 
