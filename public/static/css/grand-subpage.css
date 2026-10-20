@@ -1,275 +1,623 @@
 ﻿/* ================================================================
-   IPFEST 2027 — Grand Sub-page layer
-   Load order: bootstrap -> style.css -> competition.css -> grand-theme.css -> grand-subpage.css
+   IPFEST 2027 — Grand Sub-page Overrides
+   PURPOSE: Override competition.css (IPFEST 2026 purple theme)
+            with Grand Design 2027 Navy/Gold/Ivory palette.
+   LOAD ORDER: bootstrap → style.css → competition.css → grand-theme.css → grand-subpage.css
+   
+   WCAG AA Contrast targets:
+     Light text (#F8F5F2) on Navy (#16213E)  → ratio ~12:1 ✓
+     Gold (#E6C72A) on Navy (#16213E)        → ratio  ~8:1 ✓
+     Orange (#D97706) on Navy (#16213E)      → ratio  ~5:1 ✓
    ================================================================ */
 
-/* ---- 0. Token aliases ----------------------------------------- */
+/* ---- 0. Design tokens ----------------------------------------- */
 :root {
-  --sp-navy:   #16213E;
-  --sp-ivory:  #F8F5F2;
-  --sp-slate:  #6C677D;
-  --sp-gold:   #E6C72A;
-  --sp-orange: #D97706;
+  --gsp-navy:   #16213E;
+  --gsp-ivory:  #F8F5F2;
+  --gsp-slate:  #6C677D;
+  --gsp-gold:   #E6C72A;
+  --gsp-orange: #D97706;
+  --gsp-navy-mid: #1E2D4F;   /* slightly lighter navy for cards */
+  --gsp-text:   #F0EDE8;     /* primary readable text on dark bg */
+  --gsp-text-muted: rgba(240, 237, 232, 0.72); /* secondary text */
 }
 
-/* ---- 1. Page background --------------------------------------- */
+/* ================================================================
+   1. BODY & BACKGROUND
+   ================================================================ */
 body {
   background:
-    radial-gradient(ellipse 55% 45% at 95% 0%,  rgba(108,103,125,.35), transparent 70%),
-    radial-gradient(ellipse 45% 35% at 0%  55%, rgba(108,103,125,.18), transparent 70%),
-    radial-gradient(ellipse 35% 25% at 50% 100%,rgba(217,119,6,.10),   transparent 70%),
-    var(--sp-navy) !important;
+    radial-gradient(ellipse 60% 50% at 90% 0%,   rgba(108,103,125,.40) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 35% at 5%  55%,  rgba(108,103,125,.20) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 20% at 50% 100%, rgba(217,119,6,.12)   0%, transparent 65%),
+    var(--gsp-navy) !important;
+  color: var(--gsp-text) !important;
+  font-family: "Poppins", sans-serif !important;
 }
-body::after { background-image: none !important; opacity: 0 !important; }
 
-/* ---- 2. Spinner ----------------------------------------------- */
-#spinner.bg-white { background: var(--sp-ivory) !important; }
+/* Remove the halftone dot overlay from competition.css */
+body::after {
+  background-image: none !important;
+  opacity: 0 !important;
+}
+
+/* ================================================================
+   2. SPINNER
+   ================================================================ */
+#spinner.bg-white { background: var(--gsp-ivory) !important; }
 #spinner .spinner-border {
-  border-color: var(--sp-gold) !important;
+  border-color: var(--gsp-gold) !important;
   border-right-color: transparent !important;
 }
 
-/* ---- 3. Breadcrumb / Hero header ------------------------------ */
+/* ================================================================
+   3. NAVBAR
+   ================================================================ */
+.navbar {
+  background: rgba(22, 33, 62, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,.35) !important;
+  border-bottom: 1px solid rgba(230,199,42,.30) !important;
+}
+
+.navbar::before { background-color: transparent !important; }
+
+.navbar .navbar-brand img { display: block; }
+
+.navbar .navbar-nav .nav-link {
+  color: var(--gsp-text) !important;
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 1.1rem !important;
+  border-radius: 999px !important;
+  transition: background .25s, color .25s !important;
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link:focus,
+.navbar .navbar-nav .nav-link.active {
+  color: var(--gsp-navy) !important;
+  background: var(--gsp-gold) !important;
+}
+
+.navbar-toggler { border-color: rgba(230,199,42,.50) !important; }
+.navbar-toggler .fa-bars { color: var(--gsp-gold) !important; }
+
+/* Login button in navbar */
+#btn-login-status .btn {
+  border-color: var(--gsp-gold) !important;
+  color: var(--gsp-gold) !important;
+  background: transparent !important;
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 500 !important;
+  transition: all .3s ease !important;
+}
+#btn-login-status .btn:hover {
+  background: var(--gsp-gold) !important;
+  color: var(--gsp-navy) !important;
+}
+
+/* Dropdown */
+.dropdown-menu {
+  background: rgba(22, 33, 62, 0.98) !important;
+  border: 1px solid rgba(230,199,42,.45) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,.50) !important;
+  backdrop-filter: blur(10px) !important;
+}
+.dropdown-item {
+  color: var(--gsp-text) !important;
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 400 !important;
+  transition: all .2s ease !important;
+}
+.dropdown-item:hover,
+.dropdown-item:focus,
+.dropdown-item.active {
+  background: var(--gsp-gold) !important;
+  color: var(--gsp-navy) !important;
+}
+
+/* ================================================================
+   4. HERO / BREADCRUMB HEADER
+   ================================================================ */
 .bg-breadcrumb {
   background:
-    radial-gradient(ellipse 70% 50% at 50% 110%, rgba(230,199,42,.18), transparent 60%),
-    radial-gradient(ellipse 40% 40% at 90%  0%,  rgba(108,103,125,.30), transparent 55%),
-    var(--sp-navy) !important;
-  padding: 160px 0 80px !important;
-  position: relative;
-  overflow: hidden;
-  border-bottom: 3px solid;
-  border-image: linear-gradient(90deg, transparent, var(--sp-gold), var(--sp-orange), var(--sp-gold), transparent) 1;
+    radial-gradient(ellipse 70% 55% at 50% 115%, rgba(230,199,42,.22) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 45% at 92%  0%,  rgba(108,103,125,.35) 0%, transparent 55%),
+    var(--gsp-navy) !important;
+  padding: 160px 0 90px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  border-bottom: 3px solid transparent !important;
+  border-image: linear-gradient(90deg, transparent 0%, var(--gsp-gold) 35%, var(--gsp-orange) 50%, var(--gsp-gold) 65%, transparent 100%) 1 !important;
 }
-.breadcrumb-animation li { background: rgba(230,199,42,.18) !important; border-radius: 50%; }
+
+/* Animated bubbles — gold tint */
+.breadcrumb-animation li {
+  background: rgba(230,199,42,.18) !important;
+  border-radius: 50% !important;
+}
+
+/* ALL text inside breadcrumb = ivory (override competition.css blue override) */
+.bg-breadcrumb *,
+.bg-breadcrumb h1,
+.bg-breadcrumb h2,
+.bg-breadcrumb h3,
+.bg-breadcrumb h4,
+.bg-breadcrumb h5,
+.bg-breadcrumb .display-3,
+.bg-breadcrumb figcaption,
+.bg-breadcrumb .blockquote-footer {
+  color: var(--gsp-ivory) !important;
+  -webkit-text-fill-color: var(--gsp-ivory) !important;
+}
+
 .bg-breadcrumb .display-3,
 .bg-breadcrumb h1,
 .bg-breadcrumb h2,
 .bg-breadcrumb h3 {
-  font-family: "Dream Avenue","Playfair Display",serif !important;
-  color: var(--sp-ivory) !important;
-  -webkit-text-fill-color: var(--sp-ivory) !important;
-  text-shadow: 0 4px 24px rgba(0,0,0,.45);
-  font-weight: 400 !important;
-}
-.bg-breadcrumb .blockquote-footer,
-.bg-breadcrumb figcaption { color: rgba(248,245,242,.70) !important; font-family: "Poppins",sans-serif !important; }
-.bg-breadcrumb img.img-fluid {
-  filter: drop-shadow(0 0 18px rgba(230,199,42,.5)) drop-shadow(0 6px 12px rgba(0,0,0,.4));
+  font-family: "Playfair Display", serif !important;
+  font-weight: 600 !important;
+  text-shadow: 0 3px 20px rgba(0,0,0,.50) !important;
+  letter-spacing: .01em !important;
 }
 
-/* ---- 4. Main content panels ----------------------------------- */
-body:not(.dashboard-theme) main .container {
-  background: rgba(248,245,242,.06) !important;
-  border: 1px solid rgba(230,199,42,.35) !important;
-  border-radius: 20px !important;
-  box-shadow: 0 16px 48px rgba(0,0,0,.30) !important;
-  backdrop-filter: blur(6px);
+.bg-breadcrumb figcaption,
+.bg-breadcrumb .blockquote-footer {
+  font-family: "Poppins", sans-serif !important;
+  font-size: .95rem !important;
+  color: rgba(248,245,242,.78) !important;
+  -webkit-text-fill-color: rgba(248,245,242,.78) !important;
 }
-body:not(.dashboard-theme) .experience .container {
+
+.bg-breadcrumb img.img-fluid {
+  filter: drop-shadow(0 0 20px rgba(230,199,42,.55)) drop-shadow(0 8px 16px rgba(0,0,0,.45)) !important;
+}
+
+/* ================================================================
+   5. MAIN CONTENT AREA (glass ivory cards)
+   ================================================================ */
+
+/* All direct .container children in <main> get glass card treatment */
+body:not(.dashboard-theme) main > .container-fluid > .container,
+body:not(.dashboard-theme) main > .container {
+  background: rgba(30, 45, 79, 0.55) !important;
+  border: 1px solid rgba(230,199,42,.30) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,.30), inset 0 1px 0 rgba(230,199,42,.12) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  padding: 2.5rem !important;
+}
+
+/* Timeline container stays transparent */
+body:not(.dashboard-theme) .experience .container,
+body:not(.dashboard-theme) .experience > .container {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
+  padding: 0 !important;
 }
 
-/* ---- 5. About -- text & image --------------------------------- */
-.contact h4.text-primary {
-  font-family: "Safira March","Playfair Display",serif !important;
-  color: var(--sp-gold) !important;
-  -webkit-text-fill-color: var(--sp-gold) !important;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+/* ================================================================
+   6. ALL TEXT inside main — force readable ivory/gold tones
+   ================================================================ */
+
+/* The nuclear competition.css rule sets everything to var(--dashboard-dark)
+   We must override EVERY selector it uses with higher specificity.        */
+
+body:not(.dashboard-theme) main .container *,
+body:not(.dashboard-theme) main .container h1,
+body:not(.dashboard-theme) main .container h2,
+body:not(.dashboard-theme) main .container h3,
+body:not(.dashboard-theme) main .container h4,
+body:not(.dashboard-theme) main .container h5,
+body:not(.dashboard-theme) main .container h6,
+body:not(.dashboard-theme) main .container p,
+body:not(.dashboard-theme) main .container span,
+body:not(.dashboard-theme) main .container li,
+body:not(.dashboard-theme) main .container strong {
+  color: var(--gsp-text) !important;
+  -webkit-text-fill-color: var(--gsp-text) !important;
 }
-.contact h1.display-5 {
-  font-family: "Playfair Display",serif !important;
-  color: var(--sp-ivory) !important;
-  -webkit-text-fill-color: var(--sp-ivory) !important;
+
+/* "About" label (h4.text-primary) → gold */
+body:not(.dashboard-theme) main .container h4.text-primary,
+body:not(.dashboard-theme) .contact h4.text-primary {
+  font-family: "Poppins", sans-serif !important;
+  color: var(--gsp-gold) !important;
+  -webkit-text-fill-color: var(--gsp-gold) !important;
+  font-size: .85rem !important;
+  letter-spacing: .18em !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
 }
-.contact h1.display-5 span {
-  font-family: "Great Vibes",cursive !important;
-  color: var(--sp-orange) !important;
-  -webkit-text-fill-color: var(--sp-orange) !important;
-  font-size: 1.3em;
+
+/* "Get to Know More" headline → ivory */
+body:not(.dashboard-theme) main .container h1.display-5,
+body:not(.dashboard-theme) .contact h1.display-5 {
+  font-family: "Playfair Display", serif !important;
+  color: var(--gsp-ivory) !important;
+  -webkit-text-fill-color: var(--gsp-ivory) !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
 }
-.contact p.mb-0.fs-5 {
-  color: rgba(248,245,242,.85) !important;
-  font-family: "Poppins",sans-serif !important;
-  line-height: 1.8;
+
+/* Coloured word inside display-5 → orange/script */
+body:not(.dashboard-theme) main .container h1.display-5 span,
+body:not(.dashboard-theme) .contact h1.display-5 span {
+  font-family: "Great Vibes", cursive !important;
+  color: var(--gsp-orange) !important;
+  -webkit-text-fill-color: var(--gsp-orange) !important;
+  font-size: 1.4em !important;
+  line-height: 1 !important;
 }
-.contact .col-lg-5 img {
-  border: 3px solid var(--sp-gold) !important;
-  box-shadow: 0 12px 40px rgba(0,0,0,.45), 0 0 40px rgba(230,199,42,.20) !important;
+
+/* Body paragraphs → slightly warm ivory */
+body:not(.dashboard-theme) main .container p,
+body:not(.dashboard-theme) .contact p.mb-0.fs-5,
+body:not(.dashboard-theme) .contact p {
+  color: var(--gsp-text) !important;
+  -webkit-text-fill-color: var(--gsp-text) !important;
+  font-family: "Poppins", sans-serif !important;
+  line-height: 1.85 !important;
+  font-weight: 400 !important;
+}
+
+/* Section heading repeats (e.g., "Competition Timeline", "Event Timeline") */
+body:not(.dashboard-theme) main .container .text-center h4.text-primary {
+  color: var(--gsp-gold) !important;
+  -webkit-text-fill-color: var(--gsp-gold) !important;
+}
+body:not(.dashboard-theme) main .container .text-center h1.display-5 {
+  color: var(--gsp-ivory) !important;
+  -webkit-text-fill-color: var(--gsp-ivory) !important;
+}
+
+/* About image — gold frame */
+.contact .col-lg-5 img.rounded {
+  border: 3px solid var(--gsp-gold) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,.45), 0 0 40px rgba(230,199,42,.22) !important;
   border-radius: 16px !important;
+  object-fit: cover !important;
 }
 
-/* ---- 6. Buttons ---------------------------------------------- */
-a.btn-outline-primary {
-  border-color: var(--sp-gold) !important;
-  color: var(--sp-gold) !important;
-  background: transparent !important;
-  font-family: "Poppins",sans-serif !important;
-  font-weight: 500 !important;
-  transition: all .3s ease;
-}
-a.btn-outline-primary:hover {
-  background: var(--sp-gold) !important;
-  color: var(--sp-navy) !important;
+/* ================================================================
+   7. CONTACT SECTION — full colour override
+   (competition.css forces ALL .contact children to dark colour)
+   ================================================================ */
+
+body:not(.dashboard-theme) .contact *,
+body:not(.dashboard-theme) main.contact * {
+  color: var(--gsp-text) !important;
+  -webkit-text-fill-color: var(--gsp-text) !important;
 }
 
-/* ---- 7. Section headings inside main -------------------------- */
-body:not(.dashboard-theme) main .container h4.text-primary {
-  font-family: "Safira March","Playfair Display",serif !important;
-  color: var(--sp-gold) !important;
-  -webkit-text-fill-color: var(--sp-gold) !important;
-}
-body:not(.dashboard-theme) main .container h1.display-5 {
-  color: var(--sp-ivory) !important;
-  -webkit-text-fill-color: var(--sp-ivory) !important;
-  font-family: "Playfair Display",serif !important;
-}
-body:not(.dashboard-theme) main .container h1.display-5 span {
-  font-family: "Great Vibes",cursive !important;
-  color: var(--sp-orange) !important;
-  -webkit-text-fill-color: var(--sp-orange) !important;
-}
+body:not(.dashboard-theme) .contact h4.text-primary { color: var(--gsp-gold) !important; -webkit-text-fill-color: var(--gsp-gold) !important; }
+body:not(.dashboard-theme) .contact h1.display-5   { color: var(--gsp-ivory) !important; -webkit-text-fill-color: var(--gsp-ivory) !important; }
+body:not(.dashboard-theme) .contact h1.display-5 span { color: var(--gsp-orange) !important; -webkit-text-fill-color: var(--gsp-orange) !important; }
 
-/* ---- 8. Timeline text ---------------------------------------- */
+/* ================================================================
+   8. TIMELINE
+   ================================================================ */
 body:not(.dashboard-theme) .timeline-text,
+body:not(.dashboard-theme) .timeline-text *,
 body:not(.dashboard-theme) .timeline-text h2,
-body:not(.dashboard-theme) .timeline-text .lead { color: var(--sp-ivory) !important; -webkit-text-fill-color: var(--sp-ivory) !important; }
-body:not(.dashboard-theme) .timeline-date {
-  color: var(--sp-gold) !important;
-  -webkit-text-fill-color: var(--sp-gold) !important;
-  font-family: "Safira March","Playfair Display",serif !important;
+body:not(.dashboard-theme) .timeline-text .lead {
+  color: var(--gsp-ivory) !important;
+  -webkit-text-fill-color: var(--gsp-ivory) !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
-/* ---- 9. Gallery grid ----------------------------------------- */
-.prev-event-gallery { padding: 3rem 0; }
-.prev-event-gallery .section-label {
-  font-family: "Safira March","Playfair Display",serif;
-  color: var(--sp-gold);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  font-size: .9rem;
+body:not(.dashboard-theme) .timeline-date {
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 600 !important;
+  color: var(--gsp-gold) !important;
+  -webkit-text-fill-color: var(--gsp-gold) !important;
+  font-size: .82rem !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
 }
+
+/* ================================================================
+   9. GUIDEBOOK / CTA BUTTON
+   ================================================================ */
+body:not(.dashboard-theme) a.btn-outline-primary,
+body:not(.dashboard-theme) .btn-outline-primary {
+  border: 2px solid var(--gsp-gold) !important;
+  color: var(--gsp-gold) !important;
+  -webkit-text-fill-color: var(--gsp-gold) !important;
+  background: transparent !important;
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 500 !important;
+  padding: .5rem 1.4rem !important;
+  border-radius: 999px !important;
+  transition: all .3s ease !important;
+  box-shadow: 0 4px 16px rgba(230,199,42,.20) !important;
+}
+
+body:not(.dashboard-theme) a.btn-outline-primary:hover,
+body:not(.dashboard-theme) .btn-outline-primary:hover {
+  background: var(--gsp-gold) !important;
+  color: var(--gsp-navy) !important;
+  -webkit-text-fill-color: var(--gsp-navy) !important;
+  box-shadow: 0 8px 24px rgba(230,199,42,.40) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ================================================================
+   10. GALLERY SECTION
+   ================================================================ */
+.prev-event-gallery {
+  padding: 3rem 0;
+}
+
+.prev-event-gallery .section-label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  color: var(--gsp-gold);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-size: .8rem;
+  display: block;
+  margin-bottom: .5rem;
+}
+
 .prev-event-gallery h2.section-title {
-  font-family: "Playfair Display",serif;
-  color: var(--sp-ivory);
+  font-family: "Playfair Display", serif;
+  color: var(--gsp-ivory);
   font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 600;
   margin-bottom: 2.5rem;
 }
+
 .prev-event-gallery h2.section-title span {
-  font-family: "Great Vibes",cursive;
-  color: var(--sp-orange);
-  font-size: 1.25em;
+  font-family: "Great Vibes", cursive;
+  color: var(--gsp-orange);
+  font-size: 1.3em;
+  font-weight: 400;
 }
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.25rem;
 }
+
 .gallery-item {
   position: relative;
   border-radius: 14px;
   overflow: hidden;
   border: 1px solid rgba(230,199,42,.35);
-  box-shadow: 0 8px 28px rgba(0,0,0,.35);
+  box-shadow: 0 8px 28px rgba(0,0,0,.40);
   aspect-ratio: 4 / 3;
   cursor: pointer;
-}
-.gallery-item img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform .5s ease;
   display: block;
+  text-decoration: none !important;
 }
-.gallery-item:hover img { transform: scale(1.08); }
+
+.gallery-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform .55s cubic-bezier(.25,.8,.25,1) !important;
+  display: block !important;
+}
+
+.gallery-item:hover img { transform: scale(1.09) !important; }
+
 .gallery-item::after {
   content: "\f065";
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 2rem;
-  color: var(--sp-ivory);
-  background: rgba(22,33,62,.50);
+  color: var(--gsp-ivory);
+  background: rgba(22, 33, 62, .55);
   opacity: 0;
-  transition: opacity .35s ease;
+  transition: opacity .3s ease;
+  pointer-events: none;
 }
+
 .gallery-item:hover::after { opacity: 1; }
 
-/* ---- 10. Destination cards (Tour de Bandung) ----------------- */
-.destination-cards { padding: 2.5rem 0; }
+/* ================================================================
+   11. DESTINATION CARDS (Tour de Bandung)
+   ================================================================ */
+.destination-cards { padding: 2rem 0; }
+
 .dest-card {
-  background: rgba(248,245,242,.07);
-  border: 1px solid rgba(230,199,42,.40);
-  border-radius: 20px;
+  background: rgba(30, 45, 79, 0.65);
+  border: 1px solid rgba(230,199,42,.38);
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 12px 36px rgba(0,0,0,.30);
+  box-shadow: 0 12px 36px rgba(0,0,0,.32);
   transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  height: 100%;
 }
+
 .dest-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(0,0,0,.40), 0 0 0 1px rgba(230,199,42,.55);
-  border-color: var(--sp-gold);
+  transform: translateY(-8px);
+  box-shadow: 0 24px 56px rgba(0,0,0,.45), 0 0 0 1px rgba(230,199,42,.60);
+  border-color: var(--gsp-gold);
 }
+
 .dest-card-img {
-  width: 100%; height: 200px;
+  width: 100%;
+  height: 210px;
   object-fit: cover;
   transition: transform .5s ease;
   display: block;
 }
-.dest-card:hover .dest-card-img { transform: scale(1.06); }
-.dest-card-body { padding: 1.25rem 1.5rem 1.5rem; }
-.dest-card-body h5 {
-  font-family: "Safira March","Playfair Display",serif !important;
-  color: var(--sp-gold) !important;
-  -webkit-text-fill-color: var(--sp-gold) !important;
-  font-size: 1.15rem;
-  letter-spacing: .05em;
-  margin-bottom: .5rem;
-}
-.dest-card-body p {
-  font-family: "Poppins",sans-serif !important;
-  color: rgba(248,245,242,.80) !important;
-  -webkit-text-fill-color: rgba(248,245,242,.80) !important;
-  font-size: .9rem;
-  line-height: 1.7;
-  margin: 0;
+
+.dest-card:hover .dest-card-img { transform: scale(1.07); }
+
+.dest-card-body {
+  padding: 1.4rem 1.6rem 1.6rem;
 }
 
-/* ---- 11. Map frame ------------------------------------------- */
-.container-fluid iframe.rounded {
-  border: 3px solid rgba(230,199,42,.50) !important;
-  box-shadow: 0 12px 40px rgba(0,0,0,.40), 0 0 30px rgba(230,199,42,.14) !important;
+.dest-card-body h5 {
+  font-family: "Playfair Display", serif !important;
+  color: var(--gsp-gold) !important;
+  -webkit-text-fill-color: var(--gsp-gold) !important;
+  font-size: 1.15rem !important;
+  font-weight: 600 !important;
+  margin-bottom: .65rem !important;
+  letter-spacing: .02em !important;
+}
+
+.dest-card-body p {
+  font-family: "Poppins", sans-serif !important;
+  color: var(--gsp-text-muted) !important;
+  -webkit-text-fill-color: var(--gsp-text-muted) !important;
+  font-size: .9rem !important;
+  line-height: 1.75 !important;
+  margin: 0 !important;
+  font-weight: 400 !important;
+}
+
+/* ================================================================
+   12. MAP IFRAME
+   ================================================================ */
+.container-fluid:has(iframe),
+.container-fluid.py-5:has(iframe) {
+  background: rgba(22,33,62,.50);
+  padding: 3rem 0;
+}
+
+iframe.rounded {
+  border: 2px solid rgba(230,199,42,.45) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,.42), 0 0 28px rgba(230,199,42,.14) !important;
   border-radius: 16px !important;
 }
 
-/* ---- 12. Back-to-top ----------------------------------------- */
+/* ================================================================
+   13. FOOTER
+   ================================================================ */
+body:not(.dashboard-theme) footer {
+  background-color: #0d1628 !important;
+  border-top: 1px solid rgba(230,199,42,.25) !important;
+}
+
+/* Override competition.css which already forces white in footer —
+   keep white, just make sure it's applied */
+body:not(.dashboard-theme) footer *:not(a):not(.bi):not(.link-info):not(i) {
+  color: var(--gsp-ivory) !important;
+  -webkit-text-fill-color: var(--gsp-ivory) !important;
+}
+
+body:not(.dashboard-theme) footer h5 {
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 600 !important;
+  color: var(--gsp-gold) !important;
+  -webkit-text-fill-color: var(--gsp-gold) !important;
+  margin-bottom: .75rem !important;
+}
+
+body:not(.dashboard-theme) footer .lead.text-light,
+body:not(.dashboard-theme) footer h5.lead {
+  color: var(--gsp-ivory) !important;
+  -webkit-text-fill-color: var(--gsp-ivory) !important;
+  font-weight: 500 !important;
+  font-size: .95rem !important;
+}
+
+body:not(.dashboard-theme) footer h5.fs-6 {
+  color: rgba(240,237,232,.80) !important;
+  -webkit-text-fill-color: rgba(240,237,232,.80) !important;
+  font-weight: 400 !important;
+}
+
+body:not(.dashboard-theme) footer a.link-info,
+body:not(.dashboard-theme) footer a.compe-anchor,
+body:not(.dashboard-theme) footer a.event-anchor {
+  color: rgba(230,199,42,.80) !important;
+  text-decoration: none !important;
+  transition: color .2s ease !important;
+}
+
+body:not(.dashboard-theme) footer a.link-info:hover,
+body:not(.dashboard-theme) footer a.compe-anchor:hover,
+body:not(.dashboard-theme) footer a.event-anchor:hover {
+  color: var(--gsp-gold) !important;
+  text-decoration: underline !important;
+}
+
+body:not(.dashboard-theme) footer a.text-white,
+body:not(.dashboard-theme) footer a.text-white:visited {
+  color: var(--gsp-ivory) !important;
+  transition: color .2s ease !important;
+}
+body:not(.dashboard-theme) footer a.text-white:hover { color: var(--gsp-gold) !important; }
+
+body:not(.dashboard-theme) footer .border-top { border-color: rgba(230,199,42,.22) !important; }
+body:not(.dashboard-theme) footer p.text-light { color: rgba(240,237,232,.55) !important; -webkit-text-fill-color: rgba(240,237,232,.55) !important; font-size: .85rem !important; }
+
+/* ================================================================
+   14. BACK TO TOP BUTTON
+   ================================================================ */
 .back-to-top {
-  background: linear-gradient(135deg, var(--sp-gold), var(--sp-orange)) !important;
+  background: linear-gradient(135deg, var(--gsp-gold), var(--gsp-orange)) !important;
   border: 0 !important;
-  color: var(--sp-navy) !important;
-  box-shadow: 0 8px 24px rgba(230,199,42,.35) !important;
+  color: var(--gsp-navy) !important;
+  -webkit-text-fill-color: var(--gsp-navy) !important;
+  box-shadow: 0 8px 24px rgba(230,199,42,.40) !important;
+  transition: all .3s ease !important;
 }
-.back-to-top:hover { background: var(--sp-ivory) !important; color: var(--sp-navy) !important; }
-
-/* ---- 13. Dropdown -------------------------------------------- */
-body:not(.dashboard-theme) .dropdown-menu {
-  background: var(--sp-navy) !important;
-  border: 1px solid rgba(230,199,42,.55) !important;
-}
-body:not(.dashboard-theme) .dropdown-item { color: var(--sp-ivory) !important; }
-body:not(.dashboard-theme) .dropdown-item:hover,
-body:not(.dashboard-theme) .dropdown-item:focus {
-  background: var(--sp-gold) !important;
-  color: var(--sp-navy) !important;
+.back-to-top:hover {
+  background: var(--gsp-ivory) !important;
+  color: var(--gsp-navy) !important;
+  -webkit-text-fill-color: var(--gsp-navy) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 30px rgba(230,199,42,.50) !important;
 }
 
-/* ---- 14. Reduced-motion --------------------------------------- */
+/* ================================================================
+   15. RESPONSIVE ADJUSTMENTS
+   ================================================================ */
+@media (max-width: 768px) {
+  .bg-breadcrumb { padding: 130px 0 70px !important; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  body:not(.dashboard-theme) main > .container-fluid > .container,
+  body:not(.dashboard-theme) main > .container { padding: 1.5rem !important; }
+  .dest-card-img { height: 160px; }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  .bg-breadcrumb .display-3 { font-size: 2.2rem !important; }
+}
+
+/* ================================================================
+   16. REDUCED MOTION SAFETY NET
+   ================================================================ */
 @media (prefers-reduced-motion: reduce) {
   .gallery-item img, .gallery-item::after,
   .dest-card, .dest-card-img,
-  .breadcrumb-animation li { transition: none !important; animation: none !important; }
+  .breadcrumb-animation li,
+  .back-to-top,
+  .dropdown-item,
+  a.btn-outline-primary {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ================================================================
+   17. FOCUS VISIBLE — Accessibility
+   ================================================================ */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+.gallery-item:focus-visible,
+.dest-card:focus-visible {
+  outline: 3px solid var(--gsp-gold) !important;
+  outline-offset: 3px !important;
+  border-radius: 4px;
 }
