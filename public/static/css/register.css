@@ -59,8 +59,8 @@ body {
 .step-copy { margin-bottom:1.5rem; color:rgba(248,245,242,.78); }
 .step-actions { display:flex; justify-content:space-between; gap:1rem; margin-top:1.75rem; }
 .step-actions .btn, .registration-submit { min-height:48px; padding:.65rem 1.25rem; border-radius:6px; font:600 1rem "Poppins",sans-serif; }
-.btn-primary, .registration-submit { border-color:var(--gold); background:var(--gold); color:var(--navy); }
-.btn-primary:hover, .registration-submit:hover { border-color:var(--ivory); background:var(--ivory); color:var(--navy); }
+.btn-primary, .registration-submit, #payment .step-actions .btn-outline-light { border-color:var(--gold); background:var(--gold); color:var(--navy); }
+.btn-primary:hover, .registration-submit:hover, #payment .step-actions .btn-outline-light:hover { border-color:var(--ivory); background:var(--ivory); color:var(--navy); }
 .btn-outline-light { color:var(--ivory); }
 .form-label { margin-bottom:.45rem; color:var(--ivory); font-weight:600; }
 .form-control, .form-select { min-height:42px; border:1px solid rgba(22,33,62,.24); border-radius:6px; background-color:var(--ivory); color:var(--navy); font:400 .95rem "Poppins",sans-serif; }
@@ -97,11 +97,12 @@ body {
 .payment-panel p { margin:0; }
 .payment-panel p strong { color:var(--ivory); }
 .payment-panel a { color:var(--gold); }
-.payment-proof { margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid rgba(248,245,242,.24); }
+.payment-proof { margin:1.5rem 0; padding-top:1.25rem; border-top:1px solid rgba(248,245,242,.24); }
 .payment-proof .form-label { display:block; }
 .payment-proof-help { margin:-.2rem 0 .75rem; color:rgba(248,245,242,.78); }
-.payment-proof .form-control { height:auto; padding:.6rem; border-color:rgba(248,245,242,.35); background:transparent; color:var(--ivory); }
-.payment-proof .form-control::file-selector-button { margin:-.6rem .8rem -.6rem -.6rem; padding:.65rem .9rem; border:0; border-right:1px solid rgba(248,245,242,.24); background:transparent; color:var(--gold); }
+.payment-proof .form-control { height:auto; min-height:0; padding:.35rem .5rem; border-color:rgba(248,245,242,.35); background:transparent; color:var(--ivory); line-height:1.5; }
+.payment-proof .form-control::file-selector-button { margin:-.35rem .65rem -.35rem -.5rem; padding:.45rem .8rem; border:0; border-radius:6px; background:var(--gold); color:var(--navy); font:600 1rem "Poppins",sans-serif; cursor:pointer; }
+.payment-proof .form-control::file-selector-button:hover { background:var(--ivory); }
 .form-check { padding:1rem 1rem 1rem 2.5rem; border:1px solid var(--line); border-radius:10px; background:rgba(248,245,242,.06); }
 .form-check-label { color:var(--ivory); }
 #payment .form-check { display:flex; align-items:center; gap:.5rem .65rem; padding:1rem; }

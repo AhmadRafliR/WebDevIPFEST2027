@@ -195,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentStep = 0;
   const showStep = (index) => {
     currentStep = index;
+    sessionStorage.setItem("registration-step", steps[index].dataset.registrationStep);
     steps.forEach((step, stepIndex) => { step.hidden = stepIndex !== index; });
     document.querySelectorAll(".registration-progress-step").forEach((item, stepIndex) => {
       item.classList.toggle("is-complete", stepIndex < index);
@@ -226,6 +227,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-back]").forEach(button => {
     button.addEventListener("click", () => showStep(Math.max(currentStep - 1, 0)));
   });
+  const savedStepIndex = steps.findIndex(step => step.dataset.registrationStep === sessionStorage.getItem("registration-step"));
+  if (savedStepIndex > 0) showStep(savedStepIndex);
   // Handle klik kompetisi
   document.querySelectorAll(".card-compe").forEach(card => {
     card.addEventListener("click", () => {
