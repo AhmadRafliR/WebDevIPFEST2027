@@ -41,7 +41,10 @@ function generateMemberEntry(entry, count) {
     const memberEntry = document.createElement('div');
     memberEntry.innerHTML = `
       <h3 class="lead fs-2 mt-6">Member ${i}</h3>
-      <div class="member-entry" style="margin-bottom: 2rem;">
+      <div class="member-entry">
+        <div class="registration-subsection-grid member-details">
+          <fieldset class="registration-subsection">
+            <legend>Data Diri &amp; Akademik</legend>
         <div class="row my-1">
           <div class="col-md-6">
             <label for="firstName${i}" class="form-label">First Name: </label>
@@ -60,20 +63,21 @@ function generateMemberEntry(entry, count) {
             <input type="text" name="major${i}" id="major${i}" class="form-control" required>
             <div class="invalid-feedback">Please add your member ${i} major</div>
           </div>
-          <div class="col-md-6 batch-parent">
+          <div class="col-md-6">
             <label for="batch${i}" class="form-label">Batch: </label>
-            <select name="batch${i}" id="batch${i}" class="form-select student-batch" required>
+            <select name="batch${i}" id="batch${i}" class="form-select" required>
               <option value="2025">2025</option>
               <option value="2024">2024</option>
               <option value="2023">2023</option>
               <option value="2022">2022</option>
               <option value="2021">2021</option>
-              <option value="0">Other</option>
             </select>
-            <input type="text" name="otherBatch${i}" id="otherBatch${i}" class="d-none form-control" placeholder="your batch">
             <div class="invalid-feedback">Please add your member ${i} batch</div>
           </div>
         </div>
+          </fieldset>
+          <fieldset class="registration-subsection">
+            <legend>Identitas &amp; Kontak</legend>
         <div class="row my-1">
           <div class="col-md-6">
             <label for="idCard${i}" class="form-label">ID(NIK/Pasport): </label>
@@ -98,6 +102,9 @@ function generateMemberEntry(entry, count) {
             <div class="invalid-feedback">Please add your member ${i} phone number</div>
           </div>
         </div>
+          </fieldset>
+          <fieldset class="registration-subsection">
+            <legend>Dokumen Persyaratan</legend>
         <div class="row my-1">
           <div class="col-md-6">
             <label for="studentCardPhoto${i}" class="form-label">Student Card Photo: </label>
@@ -117,24 +124,13 @@ function generateMemberEntry(entry, count) {
             <div class="invalid-feedback">Please upload the proof that you are following IPFEST 2026 Instagram</div>
           </div>
         </div>
+          </fieldset>
+        </div>
       </div>
     `;
     entry.appendChild(memberEntry);
   }
 
-  // Tambahkan listener untuk batch "Other"
-  document.querySelectorAll(".student-batch").forEach(select => {
-    select.addEventListener("change", function () {
-      const otherInput = this.parentNode.querySelector(`input[name='otherBatch${this.id.replace('batch', '')}']`);
-      if (this.value === "0") {
-        otherInput.classList.remove("d-none");
-        otherInput.required = true;
-      } else {
-        otherInput.classList.add("d-none");
-        otherInput.required = false;
-      }
-    });
-  });
 }
 
 // Fungsi upload file ke Firebase Storage
@@ -216,21 +212,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
   const validateStep = () => {
-    const step = steps[currentStep];
-    registrationForm.classList.add("was-validated");
     if (currentStep === 0 && !compeInput.value) {
       showError("Pilih kompetisi terlebih dahulu.");
       return false;
     }
-    if (currentStep === 3 && pass?.value !== confirmPass?.value) {
-      confirmPass?.setCustomValidity("Password tidak sama.");
-    } else {
-      confirmPass?.setCustomValidity("");
-    }
-    const invalidField = step.querySelector(":invalid");
-    const valid = !invalidField;
-    if (!valid) invalidField.focus();
-    return valid;
+    return true;
   };
   document.querySelectorAll("[data-next]").forEach(button => {
     button.addEventListener("click", () => {
@@ -240,13 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-back]").forEach(button => {
     button.addEventListener("click", () => showStep(Math.max(currentStep - 1, 0)));
   });
-  leaderForm?.querySelector("#batch")?.addEventListener("change", (event) => {
-    const otherBatch = leaderForm.querySelector("#other-batch");
-    const isOther = event.target.value === "0";
-    otherBatch.classList.toggle("d-none", !isOther);
-    otherBatch.required = isOther;
-  });
-
   // Handle klik kompetisi
   document.querySelectorAll(".card-compe").forEach(card => {
     card.addEventListener("click", () => {
@@ -289,20 +268,20 @@ document.addEventListener("DOMContentLoaded", () => {
     return Date.now() < earlybirdDeadline;
   }
 
-  document.querySelectorAll(".payment-method .nav-link").forEach(method => {
-    method.addEventListener('click', () => {
+  const paymentMethods = [...document.querySelectorAll(".payment-method .nav-link")];
+  const showPaymentMethod = (method) => {
       const payMethod = method.dataset.method;
-      document.querySelectorAll(".payment-method .nav-link").forEach(btn => btn.classList.remove('active'));
-      method.classList.add('active');
-
-      document.querySelectorAll(".tab-pane").forEach(pane => {
-        pane.classList.remove('show', 'active');
+      paymentMethods.forEach(btn => {
+        const selected = btn === method;
+        btn.classList.toggle('active', selected);
+        btn.setAttribute("aria-selected", String(selected));
       });
 
       const targetPane = document.querySelector(method.dataset.bsTarget);
       if (!targetPane) return;
-
-      targetPane.classList.add('show', 'active');
+      document.querySelectorAll(".payment-panel").forEach(panel => {
+        panel.hidden = panel !== targetPane;
+      });
 
       const isEarly = earlybirdStatus();
       const indoPrice = isEarly ? "IDR 200.000" : "IDR 250.000";
@@ -310,17 +289,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
       switch (payMethod) {
         case "Bank BCA":
-          targetPane.innerHTML = `<p>BCA - 2650508800 (Mochammad Rafly Ghazany A)</p><small>${indoPrice}</small>`;
+          targetPane.innerHTML = `<div class="payment-total"><span>Total pembayaran</span><strong>${indoPrice}</strong></div><p>Transfer ke rekening BCA <strong>2650508800</strong> atas nama <strong>Mochammad Rafly Ghazany A</strong>.</p>`;
           break;
         case "Gopay":
-          targetPane.innerHTML = `<p>085655226900 (Rafly Ghazany)</p><small>${indoPrice}</small>`;
+          targetPane.innerHTML = `<div class="payment-total"><span>Total pembayaran</span><strong>${indoPrice}</strong></div><p>Kirim GoPay ke nomor <strong>085655226900</strong> atas nama <strong>Rafly Ghazany</strong>.</p>`;
           break;
         case "Paypal":
-          targetPane.innerHTML = `<p><a href="https://www.paypal.me/RaflyGhazany" target="_blank">paypal.me/RaflyGhazany</a></p><small>${intlPrice}</small>`;
+          targetPane.innerHTML = `<div class="payment-total"><span>Total pembayaran</span><strong>${intlPrice}</strong></div><p>Bayar melalui <a href="https://www.paypal.me/RaflyGhazany" target="_blank" rel="noopener noreferrer">paypal.me/RaflyGhazany</a>.</p>`;
           break;
       }
-    });
+  };
+  paymentMethods.forEach(method => {
+    method.addEventListener('click', () => showPaymentMethod(method));
   });
+  if (paymentMethods[0]) showPaymentMethod(paymentMethods[0]);
 
   // Handle submit form
   registrationForm.addEventListener('submit', async (e) => {
@@ -353,11 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const firstName = document.getElementById("firstName")?.value;
       const lastName = document.getElementById("lastName")?.value;
       const major = document.getElementById("major")?.value;
-      const batchSelect = document.getElementById("batch");
-      let batch = batchSelect?.value;
-      if (batch === "0") {
-        batch = document.querySelector("input[name='other-batch']")?.value || "";
-      }
+      const batch = document.getElementById("batch")?.value;
       const teamName = document.getElementById("teamName")?.value;
       const university = document.getElementById("university")?.value;
       const phoneNo = document.getElementById("phoneNo")?.value;
@@ -435,11 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const mLastName = document.getElementById(`lastName${i}`)?.value;
         const mEmail = document.getElementById(`email${i}`)?.value;
         const mMajor = document.getElementById(`major${i}`)?.value;
-        const mBatchSelect = document.getElementById(`batch${i}`);
-        let mBatch = mBatchSelect?.value;
-        if (mBatch === "0") {
-          mBatch = document.getElementById(`otherBatch${i}`)?.value || "";
-        }
+        const mBatch = document.getElementById(`batch${i}`)?.value;
         const mIdCard = document.getElementById(`idCard${i}`)?.value;
         const mStudentId = document.getElementById(`studentId${i}`)?.value;
         const mPhoneNo = document.getElementById(`phoneNo${i}`)?.value;

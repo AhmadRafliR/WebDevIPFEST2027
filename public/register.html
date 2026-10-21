@@ -24,7 +24,7 @@
 			<p id="step-description">Pilih kompetisi yang sesuai. Ringkasan dan persyaratan tim akan membantu kamu melanjutkan pendaftaran.</p>
 			<ol class="registration-progress" aria-label="Tahap pendaftaran">
 				<li class="registration-progress-step is-current" data-step="competition" aria-current="step"><span class="registration-progress-icon" aria-hidden="true"><i class="bi bi-trophy"></i></span><span class="registration-progress-label">Pilih Kompetisi</span></li>
-				<li class="registration-progress-step" data-step="leader"><span class="registration-progress-icon" aria-hidden="true"><i class="bi bi-people"></i></span><span class="registration-progress-label">Ketua Tim</span></li>
+				<li class="registration-progress-step" data-step="leader"><span class="registration-progress-icon" aria-hidden="true"><i class="bi bi-people"></i></span><span class="registration-progress-label">Informasi dan Ketua Tim</span></li>
 				<li class="registration-progress-step" data-step="members"><span class="registration-progress-icon" aria-hidden="true"><i class="bi bi-person-vcard"></i></span><span class="registration-progress-label">Anggota Tim</span></li>
 				<li class="registration-progress-step" data-step="account"><span class="registration-progress-icon" aria-hidden="true"><i class="bi bi-person-plus"></i></span><span class="registration-progress-label">Pembuatan Akun</span></li>
 				<li class="registration-progress-step" data-step="payment"><span class="registration-progress-icon" aria-hidden="true"><i class="bi bi-credit-card"></i></span><span class="registration-progress-label">Pembayaran</span></li>
@@ -57,31 +57,41 @@
 			</section>
 
 			<section id="leader" class="registration-step" data-registration-step="leader" aria-labelledby="leader-heading" hidden>
-				<h2 id="leader-heading" tabindex="-1">Ketua Tim</h2>
+				<h2 id="leader-heading" tabindex="-1">Informasi dan Ketua Tim</h2>
 				<p class="step-copy">Isi data ketua tim. Pilihan jumlah anggota mengikuti kompetisi yang dipilih.</p>
-				<div class="row g-3">
-					<div class="col-md-6"><label for="firstName" class="form-label">Nama depan</label><input type="text" name="firstName" id="firstName" class="form-control" required><div class="invalid-feedback">Masukkan nama depan.</div></div>
+				<div class="registration-subsection-grid">
+					<fieldset class="registration-subsection">
+						<legend>Data Ketua Tim</legend>
+						<div class="row g-3">
+						<div class="col-md-6"><label for="firstName" class="form-label">Nama depan</label><input type="text" name="firstName" id="firstName" class="form-control" required><div class="invalid-feedback">Masukkan nama depan.</div></div>
 					<div class="col-md-6"><label for="lastName" class="form-label">Nama belakang</label><input type="text" name="lastName" id="lastName" class="form-control" required><div class="invalid-feedback">Masukkan nama belakang.</div></div>
-					<div class="col-md-6"><label for="major" class="form-label">Program studi</label><input type="text" name="major" id="major" class="form-control" required><div class="invalid-feedback">Masukkan program studi.</div></div>
-					<div class="col-md-6"><label for="batch" class="form-label">Angkatan</label><select name="batch" id="batch" class="form-select" required><option value="2025" selected>2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="0">Lainnya</option></select><input type="text" name="other-batch" id="other-batch" class="d-none form-control mt-2" placeholder="Angkatan kamu"><div class="invalid-feedback">Masukkan angkatan.</div></div>
-					<div class="col-md-6"><label for="teamName" class="form-label">Nama tim</label><input type="text" name="teamName" id="teamName" class="form-control" required><div class="invalid-feedback">Masukkan nama tim.</div></div>
-					<div class="col-md-6"><label for="memberCount" class="form-label">Jumlah anggota</label><select name="memberCount" id="memberCount" class="form-select" required><option value="2">2 orang</option><option value="3">3 orang</option><option value="4">4 orang</option><option value="5">5 orang</option></select><div class="invalid-feedback">Pilih jumlah anggota.</div></div>
-					<div class="col-md-6"><label for="idCard" class="form-label">Nomor identitas (NIK/Paspor)</label><input type="text" name="idCard" id="idCard" class="form-control" required><div class="invalid-feedback">Masukkan nomor identitas.</div></div>
-					<div class="col-md-6"><label for="studentId" class="form-label">Nomor induk mahasiswa</label><input type="text" name="studentId" id="studentId" class="form-control" required><div class="invalid-feedback">Masukkan nomor induk mahasiswa.</div></div>
-					<div class="col-md-6"><label for="phoneNo" class="form-label">Nomor telepon</label><input type="tel" name="phoneNo" id="phoneNo" class="form-control" required><div class="invalid-feedback">Masukkan nomor telepon.</div></div>
-					<div class="col-md-6"><label for="university" class="form-label">Universitas</label><input type="text" name="university" id="university" class="form-control" required><div class="invalid-feedback">Masukkan universitas.</div></div>
-					<div class="col-md-6"><label for="studentCardPhoto" class="form-label">Foto kartu mahasiswa</label><input type="file" name="studentCardPhoto" id="studentCardPhoto" class="form-control" required><div class="invalid-feedback">Unggah foto kartu mahasiswa.</div></div>
-					<div class="col-md-6"><label for="twibbon" class="form-label">Bukti Twibbon ketua</label><input type="file" name="twibbon" id="twibbon" class="form-control" required><div class="invalid-feedback">Unggah bukti Twibbon.</div></div>
-					<div class="col-md-6"><label for="follow-ig" class="form-label">Bukti mengikuti Instagram IPFEST</label><input type="file" name="follow-ig" id="follow-ig" class="form-control" required><div class="invalid-feedback">Unggah bukti mengikuti Instagram IPFEST.</div></div>
+						<div class="col-md-6"><label for="major" class="form-label">Program studi</label><input type="text" name="major" id="major" class="form-control" required><div class="invalid-feedback">Masukkan program studi.</div></div>
+						<div class="col-md-6"><label for="batch" class="form-label">Angkatan</label><select name="batch" id="batch" class="form-select" required><option value="2025" selected>2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option></select><div class="invalid-feedback">Masukkan angkatan.</div></div>
+						<div class="col-md-6"><label for="teamName" class="form-label">Nama tim</label><input type="text" name="teamName" id="teamName" class="form-control" required><div class="invalid-feedback">Masukkan nama tim.</div></div>
+						<div class="col-md-6"><label for="memberCount" class="form-label">Jumlah anggota</label><select name="memberCount" id="memberCount" class="form-select" required><option value="2">2 orang</option><option value="3">3 orang</option><option value="4">4 orang</option><option value="5">5 orang</option></select><div class="invalid-feedback">Pilih jumlah anggota.</div></div>
+						<div class="col-md-6"><label for="idCard" class="form-label">Nomor identitas (NIK/Paspor)</label><input type="text" name="idCard" id="idCard" class="form-control" required><div class="invalid-feedback">Masukkan nomor identitas.</div></div>
+						<div class="col-md-6"><label for="studentId" class="form-label">Nomor induk mahasiswa</label><input type="text" name="studentId" id="studentId" class="form-control" required><div class="invalid-feedback">Masukkan nomor induk mahasiswa.</div></div>
+						<div class="col-md-6"><label for="phoneNo" class="form-label">Nomor telepon</label><input type="tel" name="phoneNo" id="phoneNo" class="form-control" required><div class="invalid-feedback">Masukkan nomor telepon.</div></div>
+						<div class="col-md-6"><label for="university" class="form-label">Universitas</label><input type="text" name="university" id="university" class="form-control" required><div class="invalid-feedback">Masukkan universitas.</div></div>
+						</div>
+					</fieldset>
+					<fieldset class="registration-subsection">
+						<legend>Dokumen Persyaratan</legend>
+						<div class="row g-3">
+						<div class="col-md-6"><label for="studentCardPhoto" class="form-label">Foto kartu mahasiswa</label><input type="file" name="studentCardPhoto" id="studentCardPhoto" class="form-control" required><div class="invalid-feedback">Unggah foto kartu mahasiswa.</div></div>
+						<div class="col-md-6"><label for="twibbon" class="form-label">Bukti Twibbon ketua</label><input type="file" name="twibbon" id="twibbon" class="form-control" required><div class="invalid-feedback">Unggah bukti Twibbon.</div></div>
+						<div class="col-md-6"><label for="follow-ig" class="form-label">Bukti mengikuti Instagram IPFEST</label><input type="file" name="follow-ig" id="follow-ig" class="form-control" required><div class="invalid-feedback">Unggah bukti mengikuti Instagram IPFEST.</div></div>
+						</div>
+					</fieldset>
 				</div>
-				<div class="step-actions"><button type="button" class="btn btn-outline-light" data-back>Kembali</button><button type="button" class="btn btn-primary" data-next>Lanjut ke Anggota Tim</button></div>
+				<div class="step-actions"><button type="button" class="btn btn-primary" data-back>Kembali</button><button type="button" class="btn btn-primary" data-next>Lanjut ke Anggota Tim</button></div>
 			</section>
 
 			<section id="member" class="registration-step" data-registration-step="members" aria-labelledby="member-heading" hidden>
 				<h2 id="member-heading" tabindex="-1">Anggota Tim</h2>
 				<p class="step-copy">Lengkapi data anggota tim sesuai jumlah yang dipilih.</p>
 				<div id="entry"></div>
-				<div class="step-actions"><button type="button" class="btn btn-outline-light" data-back>Kembali</button><button type="button" class="btn btn-primary" data-next>Lanjut ke Pembuatan Akun</button></div>
+				<div class="step-actions"><button type="button" class="btn btn-primary" data-back>Kembali</button><button type="button" class="btn btn-primary" data-next>Lanjut ke Pembuatan Akun</button></div>
 			</section>
 
 			<section id="account" class="registration-step" data-registration-step="account" aria-labelledby="account-heading" hidden>
@@ -93,27 +103,31 @@
 					<div class="col-md-6"><label for="confirmPassword" class="form-label">Konfirmasi password</label><input type="password" name="confirmPassword" id="confirmPassword" class="form-control" minlength="8" autocomplete="new-password" required><div class="invalid-feedback">Password harus sama.</div></div>
 				</div>
 				<aside class="account-info"><h3>Simpan detail akunmu</h3><p>Gunakan email dan password ini untuk login kembali. Pastikan password minimal 8 karakter.</p></aside>
-				<div class="step-actions"><button type="button" class="btn btn-outline-light" data-back>Kembali</button><button type="button" class="btn btn-primary" data-next>Lanjut ke Pembayaran</button></div>
+				<div class="step-actions"><button type="button" class="btn btn-primary" data-back>Kembali</button><button type="button" class="btn btn-primary" data-next>Lanjut ke Pembayaran</button></div>
 			</section>
 
 			<section id="payment" class="registration-step" data-registration-step="payment" aria-labelledby="payment-heading" hidden>
 				<h2 id="payment-heading" tabindex="-1">Pembayaran</h2>
 				<p class="step-copy">Pilih metode pembayaran dan unggah bukti untuk menyelesaikan pendaftaran.</p>
-				<nav aria-label="Metode pembayaran"><div class="nav nav-tabs payment-method" id="nav-tab" role="tablist">
-					<button class="nav-link active" data-method="Bank BCA" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Bank BCA</button>
-					<button class="nav-link" data-method="Gopay" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">GoPay</button>
-					<button class="nav-link" data-method="Paypal" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">PayPal</button>
-				</div></nav>
-				<div class="tab-content mt-2" id="nav-tabContent">
-					<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">Pilih Bank BCA untuk melihat detail pembayaran.</div>
-					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">Pilih GoPay untuk melihat detail pembayaran.</div>
-					<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">Pilih PayPal untuk melihat detail pembayaran.</div>
+				<nav class="payment-method" aria-label="Metode pembayaran" role="tablist">
+					<button class="payment-method-option nav-link active" data-method="Bank BCA" id="nav-home-tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><img src="static/images/banks_logo/bca.png" alt=""><span>Bank BCA</span></button>
+					<button class="payment-method-option nav-link" data-method="Gopay" id="nav-profile-tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><img src="static/images/banks_logo/gopay.png" alt=""><span>GoPay</span></button>
+					<button class="payment-method-option nav-link" data-method="Paypal" id="nav-contact-tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false"><img src="static/images/banks_logo/paypal.png" alt=""><span>PayPal</span></button>
+				</nav>
+				<div class="payment-panels">
+					<div class="payment-panel" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"></div>
+					<div class="payment-panel" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" hidden></div>
+					<div class="payment-panel" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" hidden></div>
 				</div>
-				<div class="mt-3"><label for="payment-proof" class="form-label">Bukti pembayaran</label><input type="file" name="payment-proof" id="payment-proof" class="form-control" required><div class="invalid-feedback">Unggah bukti pembayaran.</div></div>
+				<div class="payment-proof">
+					<label for="payment-proof" class="form-label">Unggah bukti pembayaran</label>
+					<p class="payment-proof-help">Pilih gambar atau file bukti transfer yang menampilkan status pembayaran berhasil.</p>
+					<input type="file" name="payment-proof" id="payment-proof" class="form-control" required>
+					<div class="invalid-feedback">Unggah bukti pembayaran.</div>
+				</div>
 				<div class="form-check mt-3">
 					<input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-					<label class="form-check-label" for="invalidCheck">Saya menyetujui syarat dan ketentuan.</label>
-					<div class="invalid-feedback">Persetujuan diperlukan sebelum mengirim.</div>
+					<label class="form-check-label" for="invalidCheck">Saya menyetujui syarat dan ketentuan. Persetujuan diperlukan sebelum mengirim.</label>
 				</div>
 				<div class="step-actions"><button type="button" class="btn btn-outline-light" data-back>Kembali</button><button class="btn registration-submit" type="submit">Kirim Pendaftaran</button></div>
 			</section>
